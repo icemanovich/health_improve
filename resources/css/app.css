@@ -1,0 +1,32 @@
+body {
+  padding-top: 20px;
+  word-wrap: break-word;
+}
+
+.vcenter {
+  display: inline-block;
+  vertical-align: middle;
+  float: none;
+}
+
+.panel :last-child {
+  margin-bottom: 0;
+}
+
+.report-footer {
+  height:65px;
+}
+
+.daterangepicker .ranges li.active, .daterangepicker .ranges li:hover {
+  background-color: #18bc9c;
+  border: 1px solid #18bc9c;
+  color: #fff;
+}
+
+.daterangepicker .ranges li {
+  color: #18bc9c;
+}
+
+.daterangepicker td.active, .daterangepicker td.active:hover{
+  background-color: #18bc9c;
+}

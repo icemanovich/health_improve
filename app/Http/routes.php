@@ -14,3 +14,16 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+//Route::resource('doctors', 'DoctorController');
+Route::get('doctor', 'DoctorController@index');
+Route::get('doctor/{email}', 'DoctorController@show');
+
+
+//Route::resource('order', 'OrderController');
+Route::get('order', 'OrderController@index');
+Route::get('order/create', 'OrderController@create');
+//Route::get('order/{time}', 'OrderController@show');    // create
+Route::post('order', 'OrderController@store');    // store (used for AJAX)
+

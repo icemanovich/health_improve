@@ -17,6 +17,45 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 
+/**
+ * App\User
+ *
+ * @property integer $id
+ * @property string $name
+ * @property string $email
+ * @property string $password
+ * @property string $remember_token
+ * @property string $type
+ * @property string $description
+ * @property string $workplace
+ * @property string $speciality
+ * @property string $photo
+ * @property string $gender
+ * @property string $rating
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property string $deleted_at
+ * @property-read mixed $role
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Bican\Roles\Models\Role[] $roles
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Bican\Roles\Models\Permission[] $userPermissions
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereEmail($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User wherePassword($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereRememberToken($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereType($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereDescription($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereWorkplace($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereSpeciality($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User wherePhoto($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereGender($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereRating($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereDeletedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User doctor()
+ * @mixin \Eloquent
+ */
 class User extends Model implements AuthenticatableContract,
 //                                    AuthorizableContract,
                                     CanResetPasswordContract
@@ -77,6 +116,16 @@ class User extends Model implements AuthenticatableContract,
         $result = $this->attachRole($role_model);
 
         return $result;
+    }
+
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeDoctor($query)
+    {
+        return $query->where('type', self::TYPE_DOCTOR);
     }
 
 }
