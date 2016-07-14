@@ -2,6 +2,45 @@
 
 return [
 
+    'roles' => [
+        ['name' => 'Администратор', 'slug' => 'admin'],
+        ['name' => 'Пользователь' , 'slug' => 'user'],
+        ['name' => 'Доктор'       , 'slug' => 'doctor'],
+    ],
+    'acl' => [
+        'admin' => [
+            '*',
+        ],
+        'doctor' => [
+            '*',
+        ],
+        'user' => [
+            'users.index',
+            'users.show',
+            'users.edit',
+            'users.like',
+            'users.dislike',
+
+        ],
+        'guest'   => [ ],
+        'blocked' => [
+            'users.show',
+            'users.edit',
+        ],
+        'mailer' => [
+            '*'
+        ]
+    ],
+
+    /**
+     * Block list for ACL rules
+     */
+    'bcl' => [
+        '*' => [
+//            'users.photo',
+        ],
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Package Connection
