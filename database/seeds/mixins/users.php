@@ -6,7 +6,6 @@
 use App\User;
 
 return [
-
         // Users
     [
         'name'          => 'Георгий Фёдорович Кузьмин',
@@ -30,6 +29,7 @@ return [
         'speciality'    => 'Кардиолог',
         'rating'        => 0,
         'gender'        => 'male',
+        'photo'         => '/img/users/male.jpg',
     ],[
         'name'          => 'Геннадий Лаврентьевич Быков ',
         'email'         => 'brownapple86@example.com',
@@ -38,6 +38,7 @@ return [
         'speciality'    => 'Офтальмолог',
         'rating'        => 0,
         'gender'        => 'male',
+        'photo'         => '/img/users/male_67.jpg',
     ],
         //    Doctors
     [
@@ -49,6 +50,7 @@ return [
         'speciality'    => 'Офтальмолог',
         'rating'        => 0,
         'gender'        => 'female',
+        'photo'         => '/img/users/female_9.jpg',
     ],[
         'name'          => 'Мария Ильинична Казакова',
         'email'         => 'doc2@example.com',
@@ -58,5 +60,6 @@ return [
         'speciality'    => 'Терапевт',
         'rating'        => 0,
         'gender'        => 'female',
+        'photo'         => '/img/users/female.jpg',
     ]
 ];
