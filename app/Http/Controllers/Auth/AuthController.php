@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
+use Auth;
+use Input;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
@@ -10,6 +11,7 @@ use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
 class AuthController extends Controller
 {
+    protected $redirectPath = '/';
     /*
     |--------------------------------------------------------------------------
     | Registration & Login Controller
@@ -26,11 +28,12 @@ class AuthController extends Controller
     /**
      * Create a new authentication controller instance.
      *
-     * @return void
      */
     public function __construct()
     {
         $this->middleware('guest', ['except' => 'getLogout']);
+
+        $this->middleware('lowerEmail');
     }
 
     /**
@@ -42,24 +45,49 @@ class AuthController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|max:255',
+//            'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|confirmed|min:6',
+            'password' => 'required|confirmed|min:22',
         ]);
     }
 
     /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return User
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    protected function create(array $data)
+    public function getLogin()
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
+        return view('auth.login');
     }
+
+    /**
+     * Make login to application
+     *
+     * @param \Request $request
+     * @return $this|\Illuminate\Http\RedirectResponse
+     */
+    public function postLogin(\Request $request)
+    {
+        $email = Input::get('email');
+        $pass  = Input::get('password');
+
+        if (Auth::attempt(['email' => $email, 'password' => $pass])) {
+            return redirect()->intended('/');
+        }
+
+        return \Redirect::back()->withErrors(
+            ['Введённые имя пользователя и пароль не совпадают с сохранёнными в нашей 
+            базе данных. Проверьте правильность введённых данных и повторите попытку.']
+        );
+    }
+
+    /**
+     * Logout from application
+     */
+    public function getLogout()
+    {
+        Auth::logout();
+        return \Redirect::to('/');
+    }
+
+
 }

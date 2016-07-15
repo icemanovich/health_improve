@@ -9,6 +9,9 @@
                     <i class="small">({{$doctor->speciality}})</i>
                     </i>
                 </div>
+                <div class="h4 col-xs-6">
+                    <a href="{{URL::to('/doctor')}}" role="button" class="btn btn-xs btn-default pull-right">Назад</a>
+                </div>
             </div>
         </div>
         <div class="panel-body">

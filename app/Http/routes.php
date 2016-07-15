@@ -12,18 +12,26 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+   if (Auth::check()){
+       return redirect('/doctor/' . Auth::user()->email);
+   }
+    return Redirect::to('/login');
 });
 
 
-//Route::resource('doctors', 'DoctorController');
-Route::get('doctor', 'DoctorController@index');
-Route::get('doctor/{email}', 'DoctorController@show');
+Route::group(array('before' => 'auth'), function()
+{
+    Route::get('login', 'Auth\AuthController@getLogin');
+    Route::post('login', 'Auth\AuthController@postLogin');
+    Route::get('logout', 'Auth\AuthController@getLogout');
+
+    Route::resource('doctor', 'DoctorController');
 
 
 //Route::resource('order', 'OrderController');
-Route::get('order', 'OrderController@index');
-Route::get('order/create', 'OrderController@create');
+    Route::get('order', 'OrderController@index');
+    Route::get('order/create', 'OrderController@create');
 //Route::get('order/{time}', 'OrderController@show');    // create
-Route::post('order', 'OrderController@store');    // store (used for AJAX)
+    Route::post('order', 'OrderController@store');    // store (used for AJAX)
+});
 

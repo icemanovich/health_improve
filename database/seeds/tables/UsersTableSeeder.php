@@ -17,10 +17,12 @@ class UsersTableSeeder extends Seeder
 
             $user = \App\User::query()->where('email', $userData['email'])->first();
 
-            if (empty($user)){
+            if (empty($user)) {
                 /** @var \App\User $user */
                 $user = new \App\User($userData);
-                $user->photo = '/img/no-avatar.png';
+                if (!array_key_exists('photo', $userData)) {
+                    $user->photo = '/img/no-avatar.png';
+                }
                 $user->save();
             }
 
