@@ -5,18 +5,52 @@
         <div class="panel-heading">
             <div class="row">
                 <div class="h4 col-xs-6">
-                    <i class="fa"></i> Hello, {{ $name or 'Noname' }}!</i>
+                    {{ $doctor->name or 'Noname' }}
+                    <i class="small">({{$doctor->speciality}})</i>
+                    </i>
                 </div>
             </div>
         </div>
         <div class="panel-body">
             <div>
                 @if(isset($doctor))
-                    <pre>
-                        <?php (print_r($doctor->toArray())); ?>
-                    </pre>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <img class="thumbnail" src="{{$doctor->photo}}" data-holder-rendered="true" style="width: 200px; height: 200px;"/>
+                        </div>
+                        <div class="col-md-8">
+                            <table class="table">
+                                <tbody>
+                                <tr>
+                                    <td>Email</td>
+                                    <td>{{$doctor->email}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Специальность</td>
+                                    <td>{{$doctor->speciality}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Место работы</td>
+                                    <td>{{$doctor->workplace}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Описание</td>
+                                    <td>{{$doctor->description}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Зарегистрирован</td>
+                                    <td>{{$doctor->created_at}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 @else
-                    Нет данных по выбранному специалисту
+                    <div class="alert alert-warning" role="alert">
+                        <strong>Внимание!</strong>
+                        Нет данных по выбранному специалисту
+                    </div>
                 @endif
             </div>
         </div>
