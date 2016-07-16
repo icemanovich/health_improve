@@ -8,10 +8,10 @@
         "php": ">=5.5.9",
         "laravel/framework": "5.1.*",
         "bican/roles": "2.1.*",
-        "barryvdh/laravel-ide-helper": "^2.2",
         "doctrine/dbal": "^2.5"
     },
     "require-dev": {
+        "barryvdh/laravel-ide-helper": "^2.2",
         "fzaninotto/faker": "~1.4",
         "mockery/mockery": "0.9.*",
         "phpunit/phpunit": "~4.0",

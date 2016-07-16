@@ -55,6 +55,8 @@ use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
  * @method static \Illuminate\Database\Query\Builder|\App\User whereDeletedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\User doctor()
  * @mixin \Eloquent
+ * @property string $phone
+ * @method static \Illuminate\Database\Query\Builder|\App\User wherePhone($value)
  */
 class User extends Model implements AuthenticatableContract,
 //                                    AuthorizableContract,

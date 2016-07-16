@@ -11,13 +11,34 @@ class Order
 {
     protected $table = 'orders';
 
-    protected $fillable = ['description', 'user_id', 'period'];
+    protected $fillable = ['user_id', 'target_id', 'period'];
 
+    static $ORDER_FORMAT_DAY  = 'Y.m.d';
+    static $ORDER_FORMAT_HOUR = 'H';
 
-    /*
-     * Work period Monday-Friday from 9am till 3pm
-     * */
-    public $workDays = [1, 2, 3, 4, 5];
-    public $workHours = [9, 10, 11, 12, 13, 14, 15];
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeToday($query)
+    {
+        // TODO ::  find by Y.m.d H timestamp
+        return $query->where('date', self::$ORDER_FORMAT_DAY)->where('date', self::$ORDER_FORMAT_HOUR);
+    }
 
+    /**
+     * Get all orders filtered bu passed week number
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param null $weekNumber
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeWeek($query, $weekNumber = null)
+    {
+        if (!$weekNumber){
+            $weekNumber = date("W", strtotime( date(self::$ORDER_FORMAT_DAY) ));
+        }
+        // TODO :: find by passed week number
+        return $query->whereBetween('date', [$weekNumber-1, $weekNumber]);
+    }
 }

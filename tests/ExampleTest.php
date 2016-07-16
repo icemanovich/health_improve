@@ -13,7 +13,12 @@ class ExampleTest extends TestCase
      */
     public function testBasicExample()
     {
-        $this->visit('/')
-             ->see('Laravel 5');
+
+        var_dump(strtotime(date('d-m-Y-H')));
+        var_dump(date('d-m-Y H', 1468699200));
+        var_dump(time());
+
+//        $this->visit('/')
+//             ->see('Laravel 5');
     }
 }

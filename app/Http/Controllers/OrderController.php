@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Order;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -14,19 +15,21 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($date = null)
     {
-        // display all orders
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        var_dump($date);
+
+        if (!$date){
+            $date = date("Y.m.d H");
+        }
+
+        Order::
+
+
+
+        var_dump($date);
+        // display all orders
     }
 
     /**
@@ -48,7 +51,7 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-        //
+        // show order info
     }
 
 
