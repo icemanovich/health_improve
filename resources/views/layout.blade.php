@@ -19,33 +19,27 @@
 
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/awesome-bootstrap-checkbox/0.3.7/awesome-bootstrap-checkbox.min.css">
 
-    <link rel="stylesheet" type="text/css" href="/css/app.css">
-
-    <!--AngularJS-->
-    {{--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>--}}
-    {{--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-resource.min.js"></script>--}}
-    <!--Modules-->
     <!--App-->
-    <!--Services-->
-
+    <link rel="stylesheet" type="text/css" href="/css/app.css">
+    <script src="/js/app.js" ></script>
 
     <script type="text/javascript">
         var CSRF_TOKEN = '{{csrf_token()}}'
     </script>
 
 </head>
-<body ng-app="app">
+<body >
 
-<div class="container">
+    <div class="container">
 
-    @include('_navbar')
-    {{--@include('_errors')--}}
+        @include('_navbar')
+        {{--@include('_errors')--}}
 
-    @yield('content')
+        @yield('content')
 
-</div>
+    </div>
 
-<toasty></toasty>
+    <toasty></toasty>
 
 </body>
 </html>

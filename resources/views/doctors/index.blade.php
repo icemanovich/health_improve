@@ -18,7 +18,10 @@
                     </div>
                 </div>
                 <div class="panel-body">
-                    <div>
+                    <div class="col-md-2">
+                        <img class="thumbnail" src="{{$doctor->photo}}" data-holder-rendered="true" style="width: 150px; height: 150px;"/>
+                    </div>
+                    <div class="col-md-10">
                         Email           : {{ $doctor->email }} <br>
                         Место работы    : {{ $doctor->workplace }} <br>
                         Специальность   : {{ $doctor->speciality }} <br>

@@ -16,14 +16,17 @@ class CreateOrdersMigration extends Migration
             $table->increments('id');
 
             // make as relations
-            $table->string('user_id');      // from user
-            $table->string('target_id');    // to doctor
+//            $table->string('user_id');      // from user
+            $table->integer('user_id')->unsigned()->index();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
-//            $table->rememberToken();
+//            $table->string('target_id');    // to doctor
+            $table->integer('target_id')->unsigned()->index();
+            $table->foreign('target_id')->references('id')->on('users')->onDelete('cascade');
+
 
             $table->string('description');
-            $table->timestamp('o_start');
-            $table->timestamp('o_end');
+            $table->dateTime('work');       // working hours for doctor
 
             $table->timestamps();
             $table->softDeletes();

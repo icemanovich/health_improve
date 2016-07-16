@@ -30,6 +30,10 @@
                                     <td>{{$doctor->email}}</td>
                                 </tr>
                                 <tr>
+                                    <td>Телефон</td>
+                                    <td>{{$doctor->phone}}</td>
+                                </tr>
+                                <tr>
                                     <td>Специальность</td>
                                     <td>{{$doctor->speciality}}</td>
                                 </tr>

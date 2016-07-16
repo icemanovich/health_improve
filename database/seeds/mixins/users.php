@@ -30,6 +30,7 @@ return [
         'rating'        => 0,
         'gender'        => 'male',
         'photo'         => '/img/users/male.jpg',
+        "phone"         => "7-495-840-92-36",
     ],[
         'name'          => 'Геннадий Лаврентьевич Быков ',
         'email'         => 'brownapple86@example.com',
@@ -39,6 +40,7 @@ return [
         'rating'        => 0,
         'gender'        => 'male',
         'photo'         => '/img/users/male_67.jpg',
+        "phone"         => "7-495-796-15-64",
     ],
         //    Doctors
     [
@@ -51,6 +53,7 @@ return [
         'rating'        => 0,
         'gender'        => 'female',
         'photo'         => '/img/users/female_9.jpg',
+        "phone"         => "7-915-892-63-85",
     ],[
         'name'          => 'Мария Ильинична Казакова',
         'email'         => 'doc2@example.com',
@@ -61,5 +64,6 @@ return [
         'rating'        => 0,
         'gender'        => 'female',
         'photo'         => '/img/users/female.jpg',
+        "phone"         => "7-910-359-43-35",
     ]
 ];

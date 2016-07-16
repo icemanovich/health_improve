@@ -11,12 +11,8 @@
 |
 */
 
-Route::get('/', function () {
-   if (Auth::check()){
-       return redirect('/doctor/' . Auth::user()->email);
-   }
-    return Redirect::to('/login');
-});
+
+Route::resource('/', 'IndexController');
 
 
 Route::group(array('before' => 'auth'), function()

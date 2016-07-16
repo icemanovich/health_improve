@@ -19,6 +19,10 @@
                     <li><a href="/order">Расписание</a></li>
                     <li><a href="/logout">Выйти</a></li>
                 </ul>
+            @else
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="/login">Войти</a></li>
+                </ul>
             @endif
         </div><!--/.nav-collapse -->
     </div><!--/.container-fluid -->
