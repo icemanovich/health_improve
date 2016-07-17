@@ -23,8 +23,15 @@ class CreateOrdersMigration extends Migration
             $table->integer('target_id')->unsigned()->index();
             $table->foreign('target_id')->references('id')->on('users')->onDelete('cascade');
 
-            // working hour for doctor (data + hour time)
-            $table->timestamp('date');
+            /*
+             * working hour for doctor (data + hour time)
+             *
+             *
+             * WARNING!
+             * Default value is 'Y-m-d H:00:00' but date function returns date not in needed timezone!
+             * Thats why need to manually set date from script
+             * */
+            $table->dateTime('date');
 
             $table->timestamps();
             $table->softDeletes();

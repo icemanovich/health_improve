@@ -13,10 +13,12 @@ class ExampleTest extends TestCase
      */
     public function testBasicExample()
     {
+        date_default_timezone_set('Europe/Moscow');
 
-        var_dump(strtotime(date('d-m-Y-H')));
-        var_dump(date('d-m-Y H', 1468699200));
-        var_dump(time());
+        $date = date('Y-m-d H:00:00');
+        var_dump($date, strtotime($date));
+        var_dump(date('Y-m-d H:00:00'));
+        var_dump(date('H'));
 
 //        $this->visit('/')
 //             ->see('Laravel 5');

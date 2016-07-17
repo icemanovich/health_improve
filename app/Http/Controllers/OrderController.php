@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+date_default_timezone_set('Europe/Moscow');
+
 class OrderController extends Controller
 {
     /**
@@ -15,21 +17,13 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($date = null)
+    public function index()
     {
-
-        var_dump($date);
-
-        if (!$date){
-            $date = date("Y.m.d H");
-        }
-
-        Order::
-
-
-
-        var_dump($date);
-        // display all orders
+        $o = new Order();
+        $t = $o->calcWeek(28, 2016);
+        var_dump($t);
+//        $orders = Order::today(true)->limit(10)->get()->all();
+//        return view('order')->with(compact($orders));
     }
 
     /**
@@ -64,5 +58,17 @@ class OrderController extends Controller
     public function destroy($id)
     {
         // Cancel order
+    }
+
+
+
+    public function getDate($time = null)
+    {
+        if (!$time){
+            $date = date();
+        } else {
+
+        }
+
     }
 }

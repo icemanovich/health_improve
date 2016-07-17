@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Order;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -18,7 +19,8 @@ class IndexController extends Controller
     public function index()
     {
         $doctors = User::doctor()->limit(5)->get()->all();
-        return view('main')->with(compact('doctors'));
+        $orders  = Order::today()->limit(10)->get()->all();
+        return view('main')->with(compact('doctors', 'orders'));
     }
 
 }

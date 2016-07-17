@@ -39,6 +39,14 @@
     </div>
     <div class="panel-body">
         <div>В настоящий момент приём осуществляют
+            <div>
+
+                {{-- TODO :: Continue ghere --}}
+                @foreach($orders as $order)
+                    {{ $order }}
+                @endforeach
+
+            </div>
 
 
         </div>
