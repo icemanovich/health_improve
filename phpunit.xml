@@ -7,7 +7,8 @@
          convertNoticesToExceptions="true"
          convertWarningsToExceptions="true"
          processIsolation="false"
-         stopOnFailure="false">
+         stopOnFailure="false"
+         syntaxCheck="false">
     <testsuites>
         <testsuite name="Application Test Suite">
             <directory suffix="Test.php">./tests</directory>
@@ -23,8 +24,11 @@
     </filter>
     <php>
         <env name="APP_ENV" value="testing"/>
+        <env name="DB_DATABASE" value="db_test"/>
         <env name="CACHE_DRIVER" value="array"/>
         <env name="SESSION_DRIVER" value="array"/>
         <env name="QUEUE_DRIVER" value="sync"/>
+        <env name="MAIL_DRIVER" value="log"/>
+        <env name="CACHE_PREFIX" value="laravel_test"/>
     </php>
 </phpunit>

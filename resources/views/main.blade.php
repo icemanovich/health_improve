@@ -30,7 +30,7 @@
     <div class="panel-heading">
         <div class="row">
             <div class="h4 col-xs-6">
-                <i class="fa"></i>Приём</i>
+                Приём сегодня: <i>{{App\Order::getDate()}}</i>
             </div>
             <div class="h4 col-xs-6">
                 <a href="order" role="button" class="btn btn-xs btn-info pull-right">Расписание</a>
@@ -38,17 +38,17 @@
         </div>
     </div>
     <div class="panel-body">
-        <div>В настоящий момент приём осуществляют
-            <div>
-
-                {{-- TODO :: Continue ghere --}}
-                @foreach($orders as $order)
-                    {{ $order }}
-                @endforeach
-
-            </div>
-
-
+        <div>
+            @foreach($orders as $order)
+                <div class="col-md-6">
+                    <div class="row-fluid">
+                        <img class="thumbnail pull-left" src="{{$order->doctor->photo}}" data-holder-rendered="true" style="width: 50px; height: 50px; margin-right:20px;"/>
+                        <span class=""><b><a href="/doctor/{{$order->doctor->email}}" target="_blank">{{$order->doctor->name}}</a></b></span>
+                        <br>
+                        <span class="small"><i>{{$order->doctor->speciality}}</i> <b>(Время: {{explode(' ',$order->date)[1] }})</b></span>
+                    </div>
+                </div>
+            @endforeach
         </div>
     </div>
 

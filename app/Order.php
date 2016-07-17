@@ -43,16 +43,18 @@ class Order extends Model
     static $ORDER_FORMAT_HOUR = 'H';
 
     /**
+     * Get orders only for today
+     *
      * @param \Illuminate\Database\Eloquent\Builder $query
      * @param bool $timeLeftOnly
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeToday($query, $timeLeftOnly = false)
     {
-        return $query->whereBetween('date', [
+        return $query->betweenDates(
             self::getDate($timeLeftOnly ? date('H') : '00'),
             self::getDate('23')
-        ]);
+        );
     }
 
     /**
@@ -64,15 +66,22 @@ class Order extends Model
      */
     public function scopeWeek($query, $weekNumber = null)
     {
-        if (!$weekNumber){
-            $weekNumber = date("W", strtotime( date(self::$ORDER_FORMAT_DAY) ));
-        }
-        return $query->whereBetween('date', [
-            self::getDate('00'),
-            self::getDate('23')
-        ]);
+//        if (!$weekNumber){
+//            $weekNumber = date("W", strtotime( date(self::$ORDER_FORMAT_DAY) ));
+//        }
+//        return $query->whereBetween('date', [
+//            self::getDate('00'),
+//            self::getDate('23')
+//        ]);
     }
 
+    /**
+     * Get start and end of the passed week
+     *
+     * @param int|string $week - week number in the year
+     * @param int|string $year - year in format YYYY
+     * @return array
+     */
     public function calcWeek($week, $year)
     {
         $dto = new \DateTime();
@@ -89,7 +98,6 @@ class Order extends Model
      * @param null $from
      * @param null $to
      * @return \Illuminate\Database\Eloquent\Builder
-     * @internal param null $weekNumber
      */
     public function scopeBetweenDates($query, $from = null, $to = null)
     {
@@ -117,4 +125,33 @@ class Order extends Model
 
         return date("$date $time");
     }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param int $target_id
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeDoctorId($query, $target_id)
+    {
+        return $query->whereHas('users', function($doc_query) use ($target_id){
+            $doc_query->target_id($target_id);
+        });
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function doctor()
+    {
+        return $this->hasOne('App\User', 'id', 'target_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function user()
+    {
+        return $this->hasOne('App\User', 'id', 'user_id');
+    }
+
 }

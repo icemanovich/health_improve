@@ -89,8 +89,7 @@ class User extends Model implements AuthenticatableContract,
      * @var array
      */
     protected $hidden = ['password', 'remember_token'];
-
-
+    protected $dates  = ['created_at', 'updated_at', 'deleted_at'];
 
     const TYPE_USER     = 'user';
     const TYPE_DOCTOR   = 'doctor';

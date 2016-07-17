@@ -22,4 +22,30 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
 
         return $app;
     }
+
+    public function setUp(){
+        parent::setUp();
+        \Artisan::call('migrate');
+    }
+
+    public function tearDown(){
+        \Artisan::call('migrate:reset');
+        DB::disconnect();
+        parent::tearDown();
+    }
+
+    /**
+     * Emulate logged in user
+     *
+     * @param string $email
+     *
+     * @return \App\User|null
+     */
+    public function beUser($email) {
+        /** @var \App\User $user */
+        $user = \App\User::query()->where('email', $email)->first();
+        $this->be($user);
+
+        return $user;
+    }
 }
