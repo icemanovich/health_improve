@@ -22,14 +22,13 @@ class DoctorController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display info about doctor by their email
      *
      * @param string $email
      * @return \Illuminate\Http\Response
      */
     public function show($email)
     {
-        // Show doctor info
         $doctor = User::doctor()->where(['email' => $email])->first();
         return view('doctors.show')->with(compact('doctor'));
     }

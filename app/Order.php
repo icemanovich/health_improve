@@ -40,10 +40,13 @@ class Order extends Model
 {
     protected $table = 'orders';
 
-    protected $fillable = ['user_id', 'target_id', 'period'];
+    protected $fillable = ['user_id', 'target_id', 'date'];
 
     static $ORDER_FORMAT_DAY  = 'Y-m-d';
     static $ORDER_FORMAT_HOUR = 'H';
+
+    static $MIN_ORDER_REGISTER_TIME = 2;
+    static $MIN_ORDER_CANCEL_TIME   = 2;
 
     /**
      * Get orders only for today

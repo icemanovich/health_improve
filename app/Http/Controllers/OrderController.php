@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Mockery\CountValidator\Exception;
 
 date_default_timezone_set('Europe/Moscow');
 
@@ -53,7 +54,20 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        // $input = $request->input('email');
+        $input = $request->all();
+
+        /**
+         * TODO :: Test for MIN_ORDER_REGISTER TIME !!!!
+         *
+         * @example: (
+         *  [user_id] => 1
+         *  [target_id] => 5
+         *  [date] => 2016-07-19 14
+         *  [_url] => /order
+         *  )
+         */
+        $order = new Order($input);
+        $order->save();
     }
 
     /**
@@ -64,12 +78,23 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-        // show order info
+        $order = null;
+        $error = null;
+        try{
+            $order = Order::whereId($id)->first();
+        } catch (Exception $e){
+            $error = $e;
+        }
+
+        /**
+         * TODO :: Test errors in view
+         */
+        return view('orders.show')->with(compact('order', 'error'));
     }
 
 
     /**
-     * Remove the specified resource from storage.
+     * Cancel order from schedule
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -80,14 +105,4 @@ class OrderController extends Controller
     }
 
 
-
-    public function getDate($time = null)
-    {
-        if (!$time){
-            $date = date();
-        } else {
-
-        }
-
-    }
 }

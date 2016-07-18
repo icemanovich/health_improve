@@ -30,7 +30,7 @@
     <div class="panel-heading">
         <div class="row">
             <div class="h4 col-xs-6">
-                Приём сегодня: <i>{{App\Order::getDate()}}</i>
+                Приём сегодня: <i>{{explode(' ', App\Order::getDate())[0]}}</i>
             </div>
             <div class="h4 col-xs-6">
                 <a href="order" role="button" class="btn btn-xs btn-info pull-right">Расписание</a>
