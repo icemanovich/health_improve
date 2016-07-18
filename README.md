@@ -15,3 +15,31 @@ PHP (ООП), mysql, клиентская сторона на усмотрени
 
 ### В результате:
 Ссылка на гитхаб и развёрнутое демо.
+
+------
+
+### Установка проекта
+
+- Склонировать проект командой
+`git clone https://github.com/icemanovich/health_improve.git`
+
+- Установить зависимости
+```
+cd health_improve;
+composer update;
+```
+- Настроить .env файл для окружения
+- При использовании БД Sqlite необходимо создать файл для БД
+```
+touch database/DB_NAME;
+
+(или имя файла по-умолчанию)
+touch database/database.sqlite;
+```
+- Применить миграции и наполнение (seeding)
+```
+php artisan migrate
+
+php artisan db:seed
+```
+
