@@ -19,11 +19,30 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $o = new Order();
-        $t = $o->calcWeek(28, 2016);
-        var_dump($t);
+        /*
+         * TODO :: 1. Сделать просмотр всех приёмов по дням и неделям
+         * TODO :: 2. Сделать запись на приём (ограничить двойное назначение и тд)
+         *
+         *
+         *
+         * */
+
+
+//        $o = new Order();
+//        $t = $o->calcWeek(28, 2016);
+//        var_dump($t);
 //        $orders = Order::today(true)->limit(10)->get()->all();
 //        return view('order')->with(compact($orders));
+
+        echo '<pre>';
+
+//        $data = Order::today()->get()->all();
+        $data = Order::today()->with(['user', 'doctor'])->get()->all();
+        foreach($data as $item){
+            print_r($item->toArray());
+        }
+
+
     }
 
     /**

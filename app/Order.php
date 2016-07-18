@@ -32,6 +32,9 @@ date_default_timezone_set('Europe/Moscow');
  * @method static \Illuminate\Database\Query\Builder|\App\Order week($weekNumber = null)
  * @method static \Illuminate\Database\Query\Builder|\App\Order betweenDates($from = null, $to = null)
  * @mixin \Eloquent
+ * @property-read \App\User $doctor
+ * @property-read \App\User $user
+ * @method static \Illuminate\Database\Query\Builder|\App\Order doctorId($target_id)
  */
 class Order extends Model
 {

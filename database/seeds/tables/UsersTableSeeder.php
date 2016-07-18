@@ -11,24 +11,28 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        $users = include(database_path('seeds/mixins/users.php'));
+        try {
+            $users = include(database_path('seeds/mixins/users.php'));
 
-        foreach($users as $userData){
+            foreach ($users as $userData) {
 
-            $user = \App\User::query()->where('email', $userData['email'])->first();
+                $user = \App\User::query()->where('email', $userData['email'])->first();
 
-            if (empty($user)) {
-                /** @var \App\User $user */
-                $user = new \App\User($userData);
-                if (!array_key_exists('photo', $userData)) {
-                    $user->photo = '/img/no-avatar.png';
+                if (empty($user)) {
+                    /** @var \App\User $user */
+                    $user = new \App\User($userData);
+                    if (!array_key_exists('photo', $userData)) {
+                        $user->photo = '/img/no-avatar.png';
+                    }
+                    $user->save();
                 }
-                $user->save();
+
+                $role = $userData['type'] == 'doctor' ?: 'user';
+                $user->changeRole($role);
+
             }
-
-            $role = $userData['type'] == 'doctor' ?: 'user';
-            $user->changeRole($role);
-
+        } catch (Exception $e){
+            echo "Error to seed Users: {$e->getMessage()}";
         }
     }
 }

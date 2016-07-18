@@ -25,7 +25,7 @@ class CreateUsersTable extends Migration
             $table->string('speciality')->nullable();   // should be relation to table, but this is only demo )
 
             $table->string('photo')->nullable();
-            $table->enum('gender', ['male', 'feemale'])->default('male');
+            $table->enum('gender', ['male', 'female'])->default('male');
             $table->string('rating')->nullable()->default(0);
 
             $table->timestamps();
