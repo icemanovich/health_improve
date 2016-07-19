@@ -40,11 +40,38 @@ class ExampleTest extends TestCase
 //        var_dump($now->addHours(1)->lte($d));
 //        var_dump($now->addHours(1)->lte($d2));
 
-        $d = Carbon::now();
-        print_r(Carbon::getWeekendDays());
-        print_r($d->startOfWeek()->toDateString());
-        print_r($d->endOfWeek()->toDateTimeString());
 
+        $today = Carbon::now();
+        $week  = [$today->startOfWeek()->toDateString(), $today->endOfWeek()->toDateString()];
+
+        print_r($week);
+        var_dump($today->startOfWeek(), $today->startOfWeek()->addDay(1));
+        echo $today->startOfWeek()->addDay(1)->toDateString() . "\n";
+        echo $today->startOfWeek()->addDays(2)->toDateString() . "\n";
+        echo $today->startOfWeek()->addDays(3)->toDateString() . "\n";
+
+        $w = [$today->startOfWeek()->toDateString()];
+
+        $w = [];
+        for($i = 0; $i < 7;$i++){
+            if (!isset($next)) {
+                $next = $today->startOfWeek();
+            } else {
+                $next = $next->addDay(1);
+            }
+            $w[] = $next->toDateString();
+        }
+
+//        do{
+//            if (!isset($next)) {
+//                $next = $today->startOfWeek();
+//            } else {
+//                $next = $next->addDay(1);
+//            }
+//            $w[] = $next->toDateString();
+//        } while($next->ne($today->endOfWeek()));
+
+        print_r($w);
 
 
 //        if ($now - $d){

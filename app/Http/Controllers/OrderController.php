@@ -45,6 +45,10 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
+        if (!Auth::check()){
+            return self::showError('User not authorized');
+        }
+
         $input = $request->all();
         try {
             if (!Order::isOrderTimeMatch($input['date'])){
@@ -90,14 +94,19 @@ class OrderController extends Controller
      */
     public function destroy($id)
     {
-        // TODO :: check for user auth
-        // check for needed order by user
+        if (!Auth::check()){
+            return self::showError('User not authorized');
+        }
 
         try {
             $order = Order::whereId($id)->first();
 
             if (!$order){
                 return self::showError('No orders found by passed Id');
+            }
+
+            if (Auth::user()->id != $order->user_id){
+                return self::showError('You can not remove someone order. Manage you own!');
             }
 
             if (!Order::isCancelTimeMatch($order->date)){

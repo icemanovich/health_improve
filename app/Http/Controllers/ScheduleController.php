@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Order;
+use App\Schedule;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -38,10 +39,15 @@ class ScheduleController extends Controller
      */
     public function show($id)
     {
-        $doctor = User::doctor()->whereId($id);
+        $doctor = User::doctor()->whereId($id)->first();
         $doctor->work_date = Order::$work_date;
 
-        return view('schedule.show')->with(compact('doctor'));
+        $week = Schedule::getWeekDates();
+
+        // TODO :: add orders to week days to display in View
+//        $orders = Order::week();
+
+        return view('schedule.show')->with(compact('doctor', 'week', 'today'));
     }
 
     public function showByWeek($weekNumber = null)

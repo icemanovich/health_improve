@@ -52,7 +52,6 @@ class Order extends Model
     static $MIN_ORDER_REGISTER_TIME = 1;
     static $MIN_ORDER_CANCEL_TIME   = 2;
 
-
     static $work_days  = [1,2,3,4,5];
     static $work_hours = [9,10,11,12,13,14,15];
     static $work_date  = [
@@ -82,35 +81,37 @@ class Order extends Model
      * Get all orders filtered bu passed week number
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param null $weekNumber
+     * @param null $startOfWeekDate
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeWeek($query, $weekNumber = null)
+    public function scopeWeek($query, $startOfWeekDate = null)
     {
-//        if (!$weekNumber){
-//            $weekNumber = date("W", strtotime( date(self::$ORDER_FORMAT_DAY) ));
-//        }
-//        return $query->whereBetween('date', [
-//            self::getDate('00'),
-//            self::getDate('23')
-//        ]);
+        if ($startOfWeekDate){
+            $d = Carbon::now($startOfWeekDate);
+        } else {
+            $d = Carbon::now();
+        }
+
+        return $query->whereBetween('date', [
+            $d->startOfWeek(),
+            $d->endOfWeek()
+        ]);
     }
 
-    /**
-     * Get start and end of the passed week
-     *
-     * @param int|string $week - week number in the year
-     * @param int|string $year - year in format YYYY
-     * @return array
-     */
-    public static function calcWeek($week, $year)
-    {
-        $dto = new \DateTime();
-        $ret['week_start'] = $dto->setISODate($year, $week)->format('Y-m-d');
-        $ret['week_end'] = $dto->modify('+6 days')->format('Y-m-d');
-        return $ret;
-    }
-
+//    /**
+//     * Get start and end of the passed week
+//     *
+//     * @param int|string $week - week number in the year
+//     * @param int|string $year - year in format YYYY
+//     * @return array
+//     */
+//    public static function calcWeek($week, $year)
+//    {
+//        $dto = new \DateTime();
+//        $ret['week_start'] = $dto->setISODate($year, $week)->format('Y-m-d');
+//        $ret['week_end'] = $dto->modify('+6 days')->format('Y-m-d');
+//        return $ret;
+//    }
 
     /**
      * Get all orders filtered bu passed week number

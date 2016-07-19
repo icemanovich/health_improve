@@ -49,6 +49,11 @@
                                     <td>Зарегистрирован</td>
                                     <td>{{$doctor->created_at}}</td>
                                 </tr>
+                                <tr>
+                                    <td>
+                                        <a href="{{URL::to('/schedule/' . $doctor->id)}}" role="button" class="btn btn-info">Запись на приём</a>
+                                    </td>
+                                </tr>
                                 </tbody>
                             </table>
                         </div>
