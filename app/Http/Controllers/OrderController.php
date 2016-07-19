@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Order;
+use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -21,30 +23,18 @@ class OrderController extends Controller
      */
     public function index()
     {
-        /*
-         * TODO :: 1. Сделать просмотр всех приёмов по дням и неделям
-         * TODO :: 2. Сделать запись на приём (ограничить двойное назначение и тд)
-         *
-         *
-         *
-         * */
+        $week = Carbon::now();
+        $week = [$week->startOfWeek()->toDateString(), $week->endOfWeek()->toDateString()];
 
+        $orders = Order::betweenDates($week[0], $week[1])->orderBy('date')->groupBy('date')->with(['doctor'])->get()->all();
 
-//        $o = new Order();
-//        $t = $o->calcWeek(28, 2016);
-//        var_dump($t);
-//        $orders = Order::today(true)->limit(10)->get()->all();
-//        return view('order')->with(compact($orders));
+        // TODO :: group and count orders per doctor and week day
+//        echo '<pre>';
+//        foreach($orders as $order){
+//            print_r($order->toArray());
+//        }
 
-        echo '<pre>';
-
-//        $data = Order::today()->get()->all();
-        $data = Order::today()->with(['user', 'doctor'])->get()->all();
-        foreach($data as $item){
-            print_r($item->toArray());
-        }
-
-
+        return view('orders.index')->with(compact('orders', 'week'));
     }
 
     /**
@@ -89,11 +79,6 @@ class OrderController extends Controller
     public function show($id)
     {
         $order = Order::whereId($id)->with(['doctor'])->first();
-
-        if (!$order){
-            return view('orders.show')->withErrors(['msg', 'The Message']);
-        }
-
         return view('orders.show')->with(compact('order'));
     }
 

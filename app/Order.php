@@ -52,6 +52,17 @@ class Order extends Model
     static $MIN_ORDER_REGISTER_TIME = 1;
     static $MIN_ORDER_CANCEL_TIME   = 2;
 
+
+    static $work_days  = [1,2,3,4,5];
+    static $work_hours = [9,10,11,12,13,14,15];
+    static $work_date  = [
+        1 => [9,10,11,12,13,14,15],
+        2 => [15,16,17],
+        3 => [9,10,11,12,13,14,15],
+        4 => [9,10,11,12,13,14,15],
+        5 => [9,10,11,12,13,14,15],
+    ];
+
     /**
      * Get orders only for today
      *
@@ -92,7 +103,7 @@ class Order extends Model
      * @param int|string $year - year in format YYYY
      * @return array
      */
-    public function calcWeek($week, $year)
+    public static function calcWeek($week, $year)
     {
         $dto = new \DateTime();
         $ret['week_start'] = $dto->setISODate($year, $week)->format('Y-m-d');

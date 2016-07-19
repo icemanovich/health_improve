@@ -2,9 +2,9 @@
 @section('content')
 
     <div class="panel panel-default">
-        <h4>Список заказов на неделю: {{$week[0]}} - {{$week[1]}}</h4>
+        <h3>Неделя: {{$week[0]}} - {{$week[1]}}</h3>
         <hr>
-        @if(isset($orders))
+        @if(isset($doctors))
             <table class="table table-striped">
                 <thead>
                 <tr>
@@ -17,17 +17,21 @@
                 </tr>
                 </thead>
                 <tbody>
-                    @foreach($orders as $order)
-                        <tr>
-                            <td><b>{{$order->doctor->name}}</b><br><i class="small">{{$order->doctor->speciality}}</i></td>
-{{--                            @foreach($doctor->work_date as $day => $hours)--}}
-{{--                                <td>{{implode('-', [array_shift($hours), array_pop($hours)])}}</td>--}}
-                            {{--@endforeach--}}
-                        </tr>
-                    @endforeach
+                @foreach($doctors as $doctor)
+                    <tr>
+                        <td>
+                            <b>{{$doctor->name}}</b><br><i class="small">{{$doctor->speciality}}</i>
+                            <a href="/schedule/{{$doctor->id}}" role="button" class="btn btn-xs btn-primary pull-right">Запись</a>
+                        </td>
+
+                        @foreach($doctor->work_date as $day => $hours)
+                            <td>{{implode('-', [array_shift($hours), array_pop($hours)])}}</td>
+                        @endforeach
+                    </tr>
+                @endforeach
+
                 </tbody>
             </table>
-
         @else
             <div class="alert alert-warning" role="alert">
                 <strong>Внимание!</strong>

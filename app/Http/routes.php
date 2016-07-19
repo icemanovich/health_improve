@@ -24,11 +24,15 @@ Route::group(array('before' => 'auth'), function()
     Route::resource('doctor', 'DoctorController');
 
 
-//Route::resource('order', 'OrderController');
-    Route::get('order/', 'OrderController@index');
+    Route::resource('schedule', 'ScheduleController');
+
+
+    Route::get('order', 'OrderController@index');
+
     Route::get('order/date/{date}', 'OrderController@ordersByDate');
     Route::get('order/create', 'OrderController@create');
-    Route::get('order/{time}', 'OrderController@show');    // create
+    Route::get('order/{time}', 'OrderController@show');
+
     Route::post('order', 'OrderController@store');    // store (used for AJAX)
 });
 

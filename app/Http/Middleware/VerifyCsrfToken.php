@@ -12,6 +12,10 @@ class VerifyCsrfToken extends BaseVerifier
      * @var array
      */
     protected $except = [
-        //
+
+        /**
+         * TODO :: Disable force skip in roduction !!!!!!
+         */
+        '/order'
     ];
 }
