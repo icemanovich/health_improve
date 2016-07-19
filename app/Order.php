@@ -7,6 +7,7 @@
 namespace App;
 
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 date_default_timezone_set('Europe/Moscow');
@@ -45,7 +46,10 @@ class Order extends Model
     static $ORDER_FORMAT_DAY  = 'Y-m-d';
     static $ORDER_FORMAT_HOUR = 'H';
 
-    static $MIN_ORDER_REGISTER_TIME = 2;
+    /**
+     * @var int in hours
+     */
+    static $MIN_ORDER_REGISTER_TIME = 1;
     static $MIN_ORDER_CANCEL_TIME   = 2;
 
     /**
@@ -158,6 +162,28 @@ class Order extends Model
     public function user()
     {
         return $this->hasOne('App\User', 'id', 'user_id');
+    }
+
+    /**
+     * @param string $orderDate in format (YYY-MM-DD HH[::i::s])
+     * @return bool
+     */
+    public static function isCancelTimeMatch($orderDate)
+    {
+        $orderDate = Carbon::createFromFormat('Y-m-d H', $orderDate);
+        $now = Carbon::now();
+        return $orderDate->subHours(self::$MIN_ORDER_CANCEL_TIME)->gte($now);
+    }
+
+    /**
+     * @param string $orderDate in format (YYY-MM-DD HH[::i::s])
+     * @return bool
+     */
+    public static function isOrderTimeMatch($orderDate)
+    {
+        $orderDate = Carbon::createFromFormat('Y-m-d H', $orderDate);
+        $now = Carbon::now();
+        return $now->addHours(self::$MIN_ORDER_REGISTER_TIME)->lte($orderDate);
     }
 
 }

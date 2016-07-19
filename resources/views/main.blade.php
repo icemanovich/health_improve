@@ -43,7 +43,7 @@
                 <div class="col-md-6">
                     <div class="row-fluid">
                         <img class="thumbnail pull-left" src="{{$order->doctor->photo}}" data-holder-rendered="true" style="width: 50px; height: 50px; margin-right:20px;"/>
-                        <span class=""><b><a href="/doctor/{{$order->doctor->email}}" target="_blank">{{$order->doctor->name}}</a></b></span>
+                        <span class=""><b><a href="/order/{{$order->id}}" target="_blank">{{$order->doctor->name}}</a></b></span>
                         <br>
                         <span class="small"><i>{{$order->doctor->speciality}}</i> <b>(Время: {{explode(' ',$order->date)[1] }})</b></span>
                     </div>

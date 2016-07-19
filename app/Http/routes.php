@@ -25,9 +25,10 @@ Route::group(array('before' => 'auth'), function()
 
 
 //Route::resource('order', 'OrderController');
-    Route::get('order/{date?}', 'OrderController@index');
+    Route::get('order/', 'OrderController@index');
+    Route::get('order/date/{date}', 'OrderController@ordersByDate');
     Route::get('order/create', 'OrderController@create');
-//Route::get('order/{time}', 'OrderController@show');    // create
+    Route::get('order/{time}', 'OrderController@show');    // create
     Route::post('order', 'OrderController@store');    // store (used for AJAX)
 });
 

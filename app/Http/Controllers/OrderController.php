@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use \Auth;
 use Mockery\CountValidator\Exception;
 
 date_default_timezone_set('Europe/Moscow');
@@ -55,19 +56,28 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $input = $request->all();
+        try {
+            if (!Order::isOrderTimeMatch($input['date'])){
+                return self::showError('Invalid order time. Must be bigger than ' .
+                    Order::$MIN_ORDER_REGISTER_TIME . " hours");
+            }
 
-        /**
-         * TODO :: Test for MIN_ORDER_REGISTER TIME !!!!
-         *
-         * @example: (
-         *  [user_id] => 1
-         *  [target_id] => 5
-         *  [date] => 2016-07-19 14
-         *  [_url] => /order
-         *  )
-         */
-        $order = new Order($input);
-        $order->save();
+            if (Order::where([
+                'user_id' => $input['user_id'],
+                'target_id' => $input['target_id'],
+                'date' => $input['date']
+            ])->first()){
+                return self::showError('Duplicate order found');
+            }
+
+            $order = new Order($input);
+            $order->save();
+
+            return self::showSuccess('Order successfully created');
+
+        } catch (Exception $e){
+            return self::showError('Error on order creation: ' . $e->getMessage());
+        }
     }
 
     /**
@@ -78,20 +88,14 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-        $order = null;
-        $error = null;
-        try{
-            $order = Order::whereId($id)->first();
-        } catch (Exception $e){
-            $error = $e;
+        $order = Order::whereId($id)->with(['doctor'])->first();
+
+        if (!$order){
+            return view('orders.show')->withErrors(['msg', 'The Message']);
         }
 
-        /**
-         * TODO :: Test errors in view
-         */
-        return view('orders.show')->with(compact('order', 'error'));
+        return view('orders.show')->with(compact('order'));
     }
-
 
     /**
      * Cancel order from schedule
@@ -101,8 +105,34 @@ class OrderController extends Controller
      */
     public function destroy($id)
     {
-        // Cancel order
+        // TODO :: check for user auth
+        // check for needed order by user
+
+        try {
+            $order = Order::whereId($id)->first();
+
+            if (!$order){
+                return self::showError('No orders found by passed Id');
+            }
+
+            if (!Order::isCancelTimeMatch($order->date)){
+                return self::showError('Invalid order cancel time. Must be lower than ' .
+                    Order::$MIN_ORDER_CANCEL_TIME . " hours");
+            }
+
+            $order->delete();
+
+            return self::showSuccess('Order successfully removed');
+
+        } catch (Exception $e){
+            return self::showError('Error on order remove: ' . $e->getMessage());
+        }
     }
 
+
+    public function ordersByDate($date)
+    {
+        return 'ordersByDate';
+    }
 
 }
