@@ -43,3 +43,16 @@ $ php artisan migrate
 $ php artisan db:seed
 ```
 
+### Аккаунты
+
+В системе предустановлены пользователи. Для теста можно воспользоваться аккаунтами докторов и пользователей.
+- doc1@example.com / qwerty
+- doc2@example.com / qwerty
+- user1@example.com / qwerty
+- user2@example.com / qwerty
+
+
+### Demo
+
+Демо доступно по [ссылке](http://176.112.213.197/)
+
