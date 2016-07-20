@@ -2,27 +2,25 @@
 @section('content')
 
     <div class="panel panel-default">
-        <h4>Список заказов на неделю: {{$week[0]}} - {{$week[1]}}</h4>
+        <h4>Список записей на неделю: {{$week[0]}} - {{$week[1]}}</h4>
         <hr>
         @if(isset($orders))
             <table class="table table-striped">
                 <thead>
                 <tr>
-                    <th>#Врач</th>
-                    <th>Понедельник</th>
-                    <th>Вторник</th>
-                    <th>Среда</th>
-                    <th>Четверг</th>
-                    <th>Пятница</th>
+                    <th>Врач</th>
+                    <th>Дата</th>
+                    <th>Пациент</th>
                 </tr>
                 </thead>
                 <tbody>
                     @foreach($orders as $order)
                         <tr>
-                            <td><b>{{$order->doctor->name}}</b><br><i class="small">{{$order->doctor->speciality}}</i></td>
-{{--                            @foreach($doctor->work_date as $day => $hours)--}}
-{{--                                <td>{{implode('-', [array_shift($hours), array_pop($hours)])}}</td>--}}
-                            {{--@endforeach--}}
+                            <td>
+                                <b>{{$order->doctor->name}}</b><br><i class="small">{{$order->doctor->speciality}}</i>
+                            </td>
+                            <td>{{$order->date}}:00</td>
+                            <td>{{$order->user->name}}</td>
                         </tr>
                     @endforeach
                 </tbody>

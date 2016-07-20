@@ -26,7 +26,7 @@ class OrderController extends Controller
         $week = Carbon::now();
         $week = [$week->startOfWeek()->toDateString(), $week->endOfWeek()->toDateString()];
 
-        $orders = Order::betweenDates($week[0], $week[1])->orderBy('date')->groupBy('date')->with(['doctor'])->get()->all();
+        $orders = Order::betweenDates($week[0], $week[1])->orderBy('date')->groupBy('date')->with(['doctor', 'user'])->get()->all();
 
         // TODO :: group and count orders per doctor and week day
 //        echo '<pre>';
