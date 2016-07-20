@@ -44,43 +44,7 @@ class ExampleTest extends TestCase
         $today = Carbon::now();
         $week  = [$today->startOfWeek()->toDateString(), $today->endOfWeek()->toDateString()];
 
-        print_r($week);
-        var_dump($today->startOfWeek(), $today->startOfWeek()->addDay(1));
-        echo $today->startOfWeek()->addDay(1)->toDateString() . "\n";
-        echo $today->startOfWeek()->addDays(2)->toDateString() . "\n";
-        echo $today->startOfWeek()->addDays(3)->toDateString() . "\n";
-
-        $w = [$today->startOfWeek()->toDateString()];
-
-        $w = [];
-        for($i = 0; $i < 7;$i++){
-            if (!isset($next)) {
-                $next = $today->startOfWeek();
-            } else {
-                $next = $next->addDay(1);
-            }
-            $w[] = $next->toDateString();
-        }
-
-//        do{
-//            if (!isset($next)) {
-//                $next = $today->startOfWeek();
-//            } else {
-//                $next = $next->addDay(1);
-//            }
-//            $w[] = $next->toDateString();
-//        } while($next->ne($today->endOfWeek()));
-
-        print_r($w);
-
-
-//        if ($now - $d){
-//            echo "YES\n";
-//        } else {
-//            echo "NO\n";
-//        }
-
-
+        echo $today->toDateString() . ' '.$today->hour . "\n";
 
 //        $this->visit('/')
 //             ->see('Laravel 5');

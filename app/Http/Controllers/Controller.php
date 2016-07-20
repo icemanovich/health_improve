@@ -29,7 +29,7 @@ abstract class Controller extends BaseController
      * @param int $status
      * @return mixed
      */
-    public static function showError($message = null, array $headers = [], $status = 200)
+    public static function showError($message = null, array $headers = [], $status = 404)
     {
         return Response::json([ 'data' => $message, 'status' => 'error' ], $status, $headers);
     }

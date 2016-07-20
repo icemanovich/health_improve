@@ -43,11 +43,36 @@ class ScheduleController extends Controller
         $doctor->work_date = Order::$work_date;
 
         $week = Schedule::getWeekDates();
+        $now = Carbon::now();
 
-        // TODO :: add orders to week days to display in View
-//        $orders = Order::week();
+        $orders = Order::week()->where('target_id', $doctor->id)->get()->all();
 
-        return view('schedule.show')->with(compact('doctor', 'week', 'today'));
+        $items = [];
+        foreach($doctor->work_date as $day => $hours){
+            foreach ($hours as $hour){
+                $available = true;
+                $d = $week[$day-1] . " " .  $hour;
+
+                $itemDate = Carbon::createFromFormat('Y-m-d H', $d);
+                if ($now->gte($itemDate)){
+                    $available = false;
+                }
+
+                foreach($orders as $order){
+                    if ($itemDate->eq(Carbon::createFromFormat('Y-m-d H', $order->date))){
+                        $available = false;
+                        break;
+                    }
+                }
+
+                $items[$day][] = [
+                    'hour' => $hour,
+                    'available' => $available
+                ];
+            }
+        }
+
+        return view('schedule.show')->with(compact('doctor', 'week', 'items'));
     }
 
     public function showByWeek($weekNumber = null)

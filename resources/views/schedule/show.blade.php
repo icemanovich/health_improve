@@ -1,6 +1,5 @@
 @extends("layout")
 @section('content')
-
     <div class="panel panel-default">
         <div class="panel-heading">
             <div class="row">
@@ -32,22 +31,44 @@
 
                             </thead>
                             <tbody>
+
                             {{-- Better to make via DB relations !!! --}}
-                            @foreach(['Понедельник','Вторник','Среда','Четверг','Пятница'] as $day => $dayName)
+                            @foreach(['Понедельник','Вторник','Среда','Четверг','Пятница', 'Суббота', 'Воскресенье'] as $day => $dayName)
                                 <tr>
                                     <td>
                                         <b>{{$week[$day]}}</b> <span class="small">( {{$dayName}} )</span>
                                     </td>
                                     <td>
-                                        @foreach($doctor->work_date[$day+1] as $hour)
-                                            <button
-                                                    class="btn btn-sm btn-primary make_order"
-                                                    type="button"
-                                                    style="width:60px;"
-                                                    data="{{$week[$day]}} {{$hour}}:{{Auth::user()->id}}:{{$doctor->id}}"
-                                                    available="true"
-                                            >{{ $hour }}:00</button>
-                                        @endforeach
+                                        @if(isset($items[$day+1]))
+                                            @foreach($items[$day+1] as $hourItem)
+                                                <button
+
+                                                    type="button" style="width:60px;"
+                                                    data="{{$week[$day]}} {{$hourItem['hour']}}:{{Auth::user()->id}}:{{$doctor->id}}"
+                                                    @if($hourItem['available'])
+                                                        class="btn btn-sm btn-primary make_order"
+                                                        available="true"
+                                                    @else
+                                                    class="btn btn-sm btn-default make_order"
+                                                        available="false"
+                                                    @endif
+                                                >{{ $hourItem['hour'] }}:00</button>
+                                            @endforeach
+
+                                        @endif
+                                        {{--@if(isset($doctor->work_date[$day+1]))--}}
+                                            {{--@foreach($doctor->work_date[$day+1] as $hour)--}}
+
+
+                                                {{--<button--}}
+                                                        {{--class="btn btn-sm btn-primary make_order"--}}
+                                                        {{--type="button"--}}
+                                                        {{--style="width:60px;"--}}
+                                                        {{--data="{{$week[$day]}} {{$hour}}:{{Auth::user()->id}}:{{$doctor->id}}"--}}
+                                                        {{--available="true"--}}
+                                                {{-->{{ $hour }}:00</button>--}}
+                                            {{--@endforeach--}}
+                                        {{--@endif--}}
                                     </td>
                                 </tr>
                             @endforeach

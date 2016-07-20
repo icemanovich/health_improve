@@ -18,6 +18,7 @@ class IndexController extends Controller
     public function index()
     {
         $doctors = User::doctor()->limit(5)->get()->all();
+        // bug here
         $orders  = Order::today()->limit(10)->with(['doctor'])->get()->all();
         return view('main')->with(compact('doctors', 'orders'));
     }

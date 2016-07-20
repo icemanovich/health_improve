@@ -21,7 +21,9 @@
                     <tr>
                         <td>
                             <b>{{$doctor->name}}</b><br><i class="small">{{$doctor->speciality}}</i>
-                            <a href="/schedule/{{$doctor->id}}" role="button" class="btn btn-xs btn-primary pull-right">Запись</a>
+                            <a href="/schedule/{{$doctor->id}}"
+                               role="button" class="btn btn-xs btn-primary pull-right"
+                                style="margin-top:-15px;">Запись</a>
                         </td>
 
                         @foreach($doctor->work_date as $day => $hours)

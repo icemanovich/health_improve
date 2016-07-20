@@ -8,6 +8,7 @@ namespace App;
 
 
 use Carbon\Carbon;
+use DB;
 use Illuminate\Database\Eloquent\Model;
 
 date_default_timezone_set('Europe/Moscow');
@@ -71,10 +72,11 @@ class Order extends Model
      */
     public function scopeToday($query, $timeLeftOnly = false)
     {
-        $now = Carbon::now();
+        $d1 = Carbon::now();
+        $d2 = clone $d1;
         return $query->betweenDates(
-            $timeLeftOnly ? $now->toDateString() . ' '.$now->hour : $now->startOfDay(),
-            $now->endOfWeek()
+            $timeLeftOnly ? $d1->toDateString() . ' '.$d1->hour : $d1->startOfDay(),
+            $d2->endOfWeek()
         );
     }
 
@@ -88,26 +90,28 @@ class Order extends Model
     public function scopeWeek($query, $startOfWeekDate = null)
     {
         if ($startOfWeekDate){
-            $d = Carbon::now($startOfWeekDate);
+            $d1 = Carbon::now($startOfWeekDate);
         } else {
-            $d = Carbon::now();
+            $d1 = Carbon::now();
         }
 
-        return $query->whereBetween('date', [
-            $d->startOfWeek(),
-            $d->endOfWeek()
-        ]);
+        /**
+         * Need to pass 2 different objects
+         */
+        $d2 = clone $d1;
+
+        return $query->betweenDates($d1->startOfWeek(), $d2->endOfWeek());
     }
 
     /**
      * Get all orders filtered bu passed week number
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param null $from
-     * @param null $to
+     * @param $from
+     * @param $to
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeBetweenDates($query, $from = null, $to = null)
+    public function scopeBetweenDates($query, $from, $to)
     {
         return $query->whereBetween('date', [$from, $to]);
     }
