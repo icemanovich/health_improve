@@ -1,5 +1,6 @@
 @extends("layout")
 @section('content')
+    <?php $uid = Auth::check() ? Auth::user()->id : ''; ?>
     <div class="panel panel-default">
         <div class="panel-heading">
             <div class="row">
@@ -44,7 +45,7 @@
                                                 <button
 
                                                     type="button" style="width:60px;"
-                                                    data="{{$week[$day]}} {{$hourItem['hour']}}:{{Auth::user()->id}}:{{$doctor->id}}"
+                                                    data="{{$week[$day]}} {{$hourItem['hour']}}:{{$uid}}:{{$doctor->id}}"
                                                     @if($hourItem['available'])
                                                         class="btn btn-sm btn-primary make_order"
                                                         available="true"
@@ -56,19 +57,6 @@
                                             @endforeach
 
                                         @endif
-                                        {{--@if(isset($doctor->work_date[$day+1]))--}}
-                                            {{--@foreach($doctor->work_date[$day+1] as $hour)--}}
-
-
-                                                {{--<button--}}
-                                                        {{--class="btn btn-sm btn-primary make_order"--}}
-                                                        {{--type="button"--}}
-                                                        {{--style="width:60px;"--}}
-                                                        {{--data="{{$week[$day]}} {{$hour}}:{{Auth::user()->id}}:{{$doctor->id}}"--}}
-                                                        {{--available="true"--}}
-                                                {{-->{{ $hour }}:00</button>--}}
-                                            {{--@endforeach--}}
-                                        {{--@endif--}}
                                     </td>
                                 </tr>
                             @endforeach

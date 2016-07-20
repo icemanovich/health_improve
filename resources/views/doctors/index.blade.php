@@ -13,7 +13,7 @@
                         </div>
                         <div class="h4 col-xs-6">
                             <a href="doctor/{{$doctor->email}}" role="button" class="btn btn-xs btn-info pull-right">Инфо</a>
-                            <a href="#" role="button" class="btn btn-xs btn-success pull-right">Запись на приём</a>
+                            <a href="schedule/{{$doctor->id}}" role="button" class="btn btn-xs btn-success pull-right">Запись на приём</a>
                         </div>
                     </div>
                 </div>

@@ -40,14 +40,14 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         if (!Auth::check()){
-            return self::showError('User not authorized');
+            return self::showError('Вы не авторизованы. Войдите в свою учётную запись и повторите попытку.');
         }
 
         $input = $request->all();
         try {
             if (!Order::isOrderTimeMatch($input['date'])){
-                return self::showError('Invalid order time. Must be bigger than ' .
-                    Order::$MIN_ORDER_REGISTER_TIME . " hours");
+                return self::showError('Ошибка создания заявки. Минимальный интервал более ' .
+                    Order::$MIN_ORDER_REGISTER_TIME . " часов");
             }
 
             if (Order::where([
@@ -55,16 +55,16 @@ class OrderController extends Controller
                 'target_id' => $input['target_id'],
                 'date' => $input['date']
             ])->first()){
-                return self::showError('Duplicate order found');
+                return self::showError('Такая заявка уже существует');
             }
 
             $order = new Order($input);
             $order->save();
 
-            return self::showSuccess('Order successfully created');
+            return self::showSuccess('Заявка успешно создана');
 
         } catch (Exception $e){
-            return self::showError('Error on order creation: ' . $e->getMessage());
+            return self::showError('Ошибка при создании заявки: ' . $e->getMessage());
         }
     }
 
@@ -89,31 +89,31 @@ class OrderController extends Controller
     public function destroy($id)
     {
         if (!Auth::check()){
-            return self::showError('User not authorized');
+            return self::showError('Вы не авторизованы. Войдите в свою учётную запись и повторите попытку.');
         }
 
         try {
             $order = Order::whereId($id)->first();
 
             if (!$order){
-                return self::showError('No orders found by passed Id');
+                return self::showError('Похожих записаей не найдено');
             }
 
             if (Auth::user()->id != $order->user_id){
-                return self::showError('You can not remove someone order. Manage you own!');
+                return self::showError('Вы не можете удалять чужие записи.');
             }
 
             if (!Order::isCancelTimeMatch($order->date)){
-                return self::showError('Invalid order cancel time. Must be lower than ' .
-                    Order::$MIN_ORDER_CANCEL_TIME . " hours");
+                return self::showError('Ошибка времени удаления заявки. Минимальный интервал ' .
+                    Order::$MIN_ORDER_CANCEL_TIME . " часа");
             }
 
             $order->delete();
 
-            return self::showSuccess('Order successfully removed');
+            return self::showSuccess('Заявка успешно удалена');
 
         } catch (Exception $e){
-            return self::showError('Error on order remove: ' . $e->getMessage());
+            return self::showError('Ошибка при удалении заявки: ' . $e->getMessage());
         }
     }
 
