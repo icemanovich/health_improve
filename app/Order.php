@@ -71,9 +71,10 @@ class Order extends Model
      */
     public function scopeToday($query, $timeLeftOnly = false)
     {
+        $now = Carbon::now();
         return $query->betweenDates(
-            self::getDate($timeLeftOnly ? date('H') : '00'),
-            self::getDate('23')
+            $timeLeftOnly ? $now->toDateString() . ' '.$now->hour : $now->startOfDay(),
+            $now->endOfWeek()
         );
     }
 
@@ -97,21 +98,6 @@ class Order extends Model
             $d->endOfWeek()
         ]);
     }
-
-//    /**
-//     * Get start and end of the passed week
-//     *
-//     * @param int|string $week - week number in the year
-//     * @param int|string $year - year in format YYYY
-//     * @return array
-//     */
-//    public static function calcWeek($week, $year)
-//    {
-//        $dto = new \DateTime();
-//        $ret['week_start'] = $dto->setISODate($year, $week)->format('Y-m-d');
-//        $ret['week_end'] = $dto->modify('+6 days')->format('Y-m-d');
-//        return $ret;
-//    }
 
     /**
      * Get all orders filtered bu passed week number

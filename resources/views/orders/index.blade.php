@@ -4,7 +4,7 @@
     <div class="panel panel-default">
         <h4>Список записей на неделю: {{$week[0]}} - {{$week[1]}}</h4>
         <hr>
-        @if(isset($orders))
+        @if(isset($orders) && !empty($orders))
             <table class="table table-striped">
                 <thead>
                 <tr>
