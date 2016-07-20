@@ -40,7 +40,7 @@ $(document).ready(function() {
                     btn.toggleClass('btn-primary', false);
                     btn.attr('available', 'false');
 
-                    alert(data.responseJson.data);
+                    alert(data.responseJSON.data);
                 }
             });
         }
