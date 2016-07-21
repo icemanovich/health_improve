@@ -17,9 +17,14 @@ class IndexController extends Controller
      */
     public function index()
     {
-        $doctors = User::doctor()->limit(5)->get()->all();
-        // bug here
+        $doctors = User::doctor()->limit(5)->with(['speciality', 'workplace'])->get()->all();
         $orders  = Order::today()->limit(10)->with(['doctor'])->get()->all();
+
+//        echo '<pre>';
+//        foreach($doctors as $order){
+//            print_r($order->toArray());
+//        }
+
         return view('main')->with(compact('doctors', 'orders'));
     }
 

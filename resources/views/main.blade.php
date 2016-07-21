@@ -20,7 +20,12 @@
                         <img class="thumbnail pull-left" src="{{$doctor->photo}}" data-holder-rendered="true" style="width: 50px; height: 50px; margin-right:20px;"/>
                         <span class=""><b><a href="/doctor/{{$doctor->email}}" target="_blank">{{$doctor->name}}</a></b></span>
                         <br>
-                        <span class="small"><i>{{$doctor->speciality}}</i></span>
+                        @if (isset($doctor->speciality))
+                            <?php echo $doctor->toArray()['speciality']['name']; ?>
+                        @endif
+                        @if (isset($doctor->workplace))
+                            <?php echo ' <i>"' . $doctor->toArray()['workplace']['name'] . '"</i>'; ?>
+                        @endif
                     </div>
                 </div>
             @endforeach

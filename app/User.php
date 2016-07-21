@@ -128,4 +128,20 @@ class User extends Model implements AuthenticatableContract,
         return $query->where('type', self::TYPE_DOCTOR);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function scopeWorkplace()
+    {
+        return $this->hasOne('App\Workplace', 'id', 'workplace_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function scopeSpeciality()
+    {
+        return $this->hasOne('App\Speciality', 'id', 'speciality_id');
+    }
+
 }
