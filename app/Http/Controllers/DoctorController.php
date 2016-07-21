@@ -17,7 +17,7 @@ class DoctorController extends Controller
      */
     public function index()
     {
-        $doctors = User::doctor()->get()->all();
+        $doctors = User::doctor()->with(['speciality', 'workplace'])->get()->all();
         return view('doctors.index')->with(compact('doctors'));
     }
 
@@ -29,7 +29,7 @@ class DoctorController extends Controller
      */
     public function show($email)
     {
-        $doctor = User::doctor()->where(['email' => $email])->first();
+        $doctor = User::doctor()->where(['email' => $email])->with('speciality', 'workplace')->first();
         return view('doctors.show')->with(compact('doctor'));
     }
 }

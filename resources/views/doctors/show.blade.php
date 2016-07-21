@@ -35,11 +35,11 @@
                                 </tr>
                                 <tr>
                                     <td>Специальность</td>
-                                    <td>{{$doctor->speciality}}</td>
+                                    <td><?php echo $doctor->toArray()['speciality']['name']; ?></td>
                                 </tr>
                                 <tr>
                                     <td>Место работы</td>
-                                    <td>{{$doctor->workplace}}</td>
+                                    <td><?php echo $doctor->toArray()['workplace']['name']; ?></td>
                                 </tr>
                                 <tr>
                                     <td>Описание</td>

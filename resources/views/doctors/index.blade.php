@@ -23,8 +23,9 @@
                     </div>
                     <div class="col-md-10">
                         Email           : {{ $doctor->email }} <br>
-                        Место работы    : {{ $doctor->workplace }} <br>
-                        Специальность   : {{ $doctor->speciality }} <br>
+                        {{--Место работы    : {{ $doctor->workplace }} <br>--}}
+                        Место работы    : <?php echo $doctor->toArray()['workplace']['name']; ?> <br>
+                        Специальность   : <?php echo $doctor->toArray()['speciality']['name']; ?> <br>
                         Описание        : {{ $doctor->description }} <br>
                     </div>
                 </div>

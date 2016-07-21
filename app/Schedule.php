@@ -5,6 +5,17 @@ namespace App;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\Schedule
+ *
+ * @property integer $id
+ * @property string $week_day
+ * @property string $date
+ * @method static \Illuminate\Database\Query\Builder|\App\Schedule whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Schedule whereWeekDay($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Schedule whereDate($value)
+ * @mixin \Eloquent
+ */
 class Schedule extends Model
 {
     protected $table = 'schedules';
